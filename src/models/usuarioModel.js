@@ -1,4 +1,3 @@
-import sql from 'mssql';
 import DBService from '../services/dbService.js';
 import bcrypt from 'bcryptjs';
 
@@ -98,7 +97,21 @@ class usuarioModel{
             if (result.length === 0) {
                 return null;  
             }
-            console.log(result[0]);
+            return result[0];  
+        } catch (error) {
+            console.error('Error al obtener el usuario:', error);
+            throw error;
+        }
+    }
+
+    async obtenerUsuarioPorId(idUsuario) {
+        try {
+            const procedure = 'Sistema.obtenerUsuarioPorId';
+            const params = { idUsuario: idUsuario };
+            const result = await this.DBService.execProcedure(procedure, params);
+            if (result.length === 0) {
+                return null;  
+            }
             return result[0];  
         } catch (error) {
             console.error('Error al obtener el usuario:', error);
@@ -107,8 +120,6 @@ class usuarioModel{
     }
 
     async verificarPassword(passwordIngresada, passwordAlmacenada) {
-        console.log(passwordIngresada)
-        console.log(passwordAlmacenada)
         return await bcrypt.compare(passwordIngresada.trim(), passwordAlmacenada.trim()); 
     } 
 

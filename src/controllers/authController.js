@@ -13,7 +13,6 @@ const loginUsuario = async (req, res) => {
             return res.status(400).json({ error: 'Usuario no encontrado' });
         }
         const esValida = await usuarioModel.verificarPassword(contrasena, usuario.password);
-        console.log(esValida);
         if (!esValida) {
             return res.status(400).json({ error: 'Contraseña incorrecta' });
         }

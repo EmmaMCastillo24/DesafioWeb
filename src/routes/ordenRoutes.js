@@ -1,12 +1,13 @@
 import { Router } from 'express';
 import ordenController from '../controllers/ordenController.js';
 import { autenticarJWT } from '../services/auth.js';  
+import { access } from '../services/access.js'; 
 
 const router = Router();
 
-router.get('/totalVendido-agosto', autenticarJWT, ordenController.TotalVendidoAgosto);
-router.post('/orden', autenticarJWT, ordenController.insertarOrden);
-router.put('/orden/:id', autenticarJWT, ordenController.modificarOrden);
-router.patch('/orden/:id', autenticarJWT, ordenController.modificarEstadoOrden);
+router.get('/totalVendido-agosto', autenticarJWT, access, ordenController.TotalVendidoAgosto);
+router.post('/orden', autenticarJWT, access, ordenController.insertarOrden);
+router.put('/orden/:id', autenticarJWT, access, ordenController.modificarOrden);
+router.patch('/orden/:id', autenticarJWT, access, ordenController.modificarEstadoOrden);
 
 export default router;  

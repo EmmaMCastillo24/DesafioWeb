@@ -1,4 +1,3 @@
-import sql from 'mssql';
 import DBService from '../services/dbService.js';
 
 class clienteModel{

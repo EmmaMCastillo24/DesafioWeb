@@ -56,6 +56,17 @@ const modificarPassword = async (req, res) => {
     }
 };
 
+const obtenerUsuarioPorId = async (req, res) => {
+    try {
+        const { idUsuario} = req.body;  
+        await usuarioModel.obtenerUsuarioPorId(idUsuario); 
+        res.status(201).json({ message: 'Consulta exitosa' });
+    } catch (error) {
+        console.error('Error en el controlador:', error);
+        res.status(500).json({ error: 'Error al buscar al usuario por id' });
+    }
+};
 
-export default {insertarUsuarioCliente, insertarUsuarioEmpleado, modificarUsuario, modificarEstadoUsuario, modificarPassword };
+
+export default {insertarUsuarioCliente, insertarUsuarioEmpleado, modificarUsuario, modificarEstadoUsuario, modificarPassword, obtenerUsuarioPorId };
 
