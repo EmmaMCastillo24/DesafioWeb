@@ -1,26 +1,24 @@
-import sql from 'mssql';
-import dotenv from 'dotenv';
-dotenv.config(); 
+import { Sequelize } from 'sequelize';
 
 const dbConfig = {
-    user: 'sa',
+    username: 'sa',
     password: '12345678',
-    server: 'EMMA-CASTILLO\\SQLEXPRESS',
     database: 'GDA00446-OT-EmmaMaldonado',
-    options: {
+    host: 'EMMA-CASTILLO\\SQLEXPRESS',
+    dialect: 'mssql',
+    dialectOptions: {
         encrypt: true,
         trustServerCertificate: true,  
     },
-    connectionTimeout: 30000,
-};
-
-// Intentar realizar una conexión
-sql.connect(dbConfig)
-  .then(() => {
-    console.log('Conexión exitosa a la base de datos');
-  })
-  .catch((err) => {
-    console.error('Error de conexión:', err);
-  });
-
-export default dbConfig;
+    pool: {
+      max: 5,  
+      min: 0, 
+      acquire: 30000, 
+      idle: 10000,  
+    },
+    logging: false, 
+  };
+  
+  const sequelize = new Sequelize(dbConfig);
+  
+  export default sequelize;

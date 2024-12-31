@@ -1,30 +1,29 @@
-import mssql from 'mssql';
-const { connect: _connect } = mssql;
-import dbConfig from '../config/db.js';
+import { Sequelize } from 'sequelize'; 
+import sequelize from '../config/db.js';
 
 class DBService{
     constructor(){
+        this.sequelize = sequelize;
     }
 
     //Conexion a la base de datos
     async connect(){
             try{
-                this.pool = await _connect(dbConfig);
+                await this.sequelize.authenticate();
                 console.log('Conexion con exito');
             }catch(error){
                 console.error('error en la conexion', error);
                 throw error;
-            }
-        
-        return this.pool;
+            }        
     }
+
     //Consultas
     async query(queryString){
         try{
-            if (!this.pool) {
-                await this.connect(); 
-            }  
-            const result = await this.pool.request().query(queryString);  
+            await this.connect();
+            const result = await this.sequelize.query(queryString, {
+                type: Sequelize.QueryTypes.SELECT 
+            });
             return result; 
         } catch (error) {
             console.error("Error al ejecutar la consulta:", error);
@@ -33,16 +32,17 @@ class DBService{
     }    
 
     //Ejecutar sp
-    async execProcedure(procedureName, parameters = []){
+    async execProcedure(procedureName, parameters = {}){
         try{
-            if (!this.pool) {
-                await this.connect(); 
-            }  
-            const request = await this.pool.request();
-            parameters.forEach((param)=>{
-                request.input(param.name, param.type, param.value);
+            await this.connect();      
+            const paramNames = Object.keys(parameters);
+            const queryParams = paramNames.map(param => `@${param} = :${param}`).join(", ");
+                  const query = `EXEC ${procedureName} ${queryParams}`;
+                  const result = await sequelize.query(query, {
+              replacements: parameters, 
+              type: sequelize.QueryTypes.SELECT
             });
-            return await request.execute(procedureName);
+            return result;
         }catch(error){
             console.error("Error en el consumo del sp:", error);
             throw error;
@@ -52,10 +52,9 @@ class DBService{
      // Cerrar la conexión
      async close() {
         try {
-            if (this.pool) {
-                await this.pool.close();  // Cerramos la conexión cuando ya no sea necesaria
-                console.log("Conexión cerrada");
-            }
+            await this.sequelize.close(); 
+            console.log("Conexión cerrada");
+            
         } catch (error) {
             console.error("Error al cerrar la conexión:", error);
             throw error;

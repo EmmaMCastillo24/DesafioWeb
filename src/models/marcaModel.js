@@ -8,9 +8,7 @@ class marcaModel{
     async insertarMarca(nombreMarca){
         try{
             const procedure = 'Orden.InsertarMarca';
-            const params = [
-                {name: 'nombreMarca', type: sql.VarChar, value: nombreMarca},
-            ]
+            const params = {nombreMarca: nombreMarca};        
             const result = await this.DBService.execProcedure(procedure, params);
             return result.recordset;
         }catch(error){
@@ -21,10 +19,8 @@ class marcaModel{
     async modificarMarca(idMarca, nombreMarca){
         try{
             const procedure = 'Orden.InsertarMarca';
-            const params = [
-                {name: 'idMarca', type: sql.Int, value: idMarca},
-                {name: 'nombreMarca', type: sql.VarChar, value: nombreMarca},
-            ]
+            const params = {idMarca: idMarca,
+                            nombreMarca: nombreMarca};      
             const result = await this.DBService.execProcedure(procedure, params);
             return result.recordset;
         }catch(error){

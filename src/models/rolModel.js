@@ -9,9 +9,8 @@ class rolModel{
     async insertarRol(rol){
         try{
             const procedure = 'Sistema.InsertarRol';
-            const params = [
-                {name: 'rol', type: sql.VarChar, value: rol},
-            ]
+            const params = {rol: rol};
+            
             const result = await this.DBService.execProcedure(procedure, params);
             return result.recordset;
         }catch(error){
@@ -23,10 +22,8 @@ class rolModel{
     async modificarRol(idRol, rol){
         try{
             const procedure = 'Sistema.ModificarRol';
-            const params = [
-                {name: 'idRol', type: sql.Int, value: idRol},
-                {name: 'rol', type: sql.VarChar, value: rol}
-            ]
+            const params = {idRol: idRol,
+                            rol: rol};            
             const result = await this.DBService.execProcedure(procedure, params);
             return result.recordset;
         }catch(error){

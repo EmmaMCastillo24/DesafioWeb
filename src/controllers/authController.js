@@ -1,6 +1,5 @@
 import UsuarioModel from '../models/usuarioModel.js';
 import { generarToken } from '../services/auth.js';
-import bcrypt from 'bcrypt';
 
 const usuarioModel = new UsuarioModel();
 
@@ -25,6 +24,8 @@ const loginUsuario = async (req, res) => {
             message: 'Inicio de sesión exitoso',
             token
         });
+
+        //const usuario = await usuarioModel.simularcontra();
 
     } catch (error) {
         console.error('Error al iniciar sesión:', error);

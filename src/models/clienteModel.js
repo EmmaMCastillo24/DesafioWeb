@@ -9,14 +9,12 @@ class clienteModel{
     async insertarCliente(razonSocial, nombreComercial, direccionEntrega, telefono, correoElectronico, fechaCreacion){
         try{
             const procedure = 'Orden.InsertarCliente';
-            const params = [
-                {name: 'razonSocial', type: sql.VarChar, value: razonSocial},
-                {name: 'nombreComercial', type: sql.VarChar, value: nombreComercial},
-                {name: 'direccionEntrega', type: sql.VarChar, value: direccionEntrega},
-                {name: 'telefono', type: sql.VarChar, value: telefono},
-                {name: 'correoElectronico', type: sql.VarChar, value: correoElectronico},
-                {name: 'fechaCreacion', type: sql.Date, value: fechaCreacion}  
-            ]
+            const params = {razonSocial: razonSocial,
+                            nombreComercial: nombreComercial,
+                            direccionEntrega: direccionEntrega,
+                            telefono: telefono,
+                            correoElectronico: correoElectronico,
+                            fechaCreacion: fechaCreacion};
             const result = await this.DBService.execProcedure(procedure, params);
             return result.recordset;
         }catch(error){
@@ -28,15 +26,13 @@ class clienteModel{
     async modificarCliente(idCliente, razonSocial, nombreComercial, direccionEntrega, telefono, correoElectronico, fechaCreacion){
         try{
             const procedure = 'Orden.ModificarCliente';
-            const params = [
-                {name: 'idCliente', type: sql.Int, value: idCliente},
-                {name: 'razonSocial', type: sql.VarChar, value: razonSocial},
-                {name: 'nombreComercial', type: sql.VarChar, value: nombreComercial},
-                {name: 'direccionEntrega', type: sql.VarChar, value: direccionEntrega},
-                {name: 'telefono', type: sql.Varchar, value: telefono},
-                {name: 'correoElectronico', type: sql.VarChar, value: correoElectronico},
-                {name: 'fechaCreacion', type: sql.Date, value: fechaCreacion}  
-            ]
+            const params = {idCliente: idCliente,
+                            razonSocial: razonSocial,
+                            nombreComercial: nombreComercial,
+                            direccionEntrega: direccionEntrega,
+                            telefono: telefono,
+                            correoElectronico: correoElectronico,
+                            fechaCreacion: fechaCreacion};        
             const result = await this.DBService.execProcedure(procedure, params);
             return result.recordset;
         }catch(error){
