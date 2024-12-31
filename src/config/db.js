@@ -1,10 +1,13 @@
 import { Sequelize } from 'sequelize';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const dbConfig = {
-    username: 'sa',
-    password: '12345678',
-    database: 'GDA00446-OT-EmmaMaldonado',
-    host: 'EMMA-CASTILLO\\SQLEXPRESS',
+    username: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE,
+    host: process.env.DB_HOST,
     dialect: 'mssql',
     dialectOptions: {
         encrypt: true,
