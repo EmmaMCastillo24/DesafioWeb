@@ -4,8 +4,8 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 // Función para generar un JWT
-export const generarToken = (userId) => {
-    const payload = { id: userId };
+export const generarToken = (userId, role) => {
+    const payload = { id: userId, role: role };  // Añadimos el rol al payload
     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRATION });
     return token;
 };
@@ -33,7 +33,9 @@ export const autenticarJWT = (req, res, next) => {
 
     try {
         const decoded = verificarToken(tokenSinBearer);  // Verificamos el token
-        req.user = decoded;  // Guardamos los datos del usuario en la solicitud
+        console.log('Decoded token:', decoded);  // Agrega un log para depurar
+
+        req.user = decoded;  // Guardamos los datos del usuario en la solicitud, incluyendo el rol
         next();  // Llamamos al siguiente middleware o controlador
     } catch (error) {
         return res.status(401).json({ error: 'Token inválido o expirado' });

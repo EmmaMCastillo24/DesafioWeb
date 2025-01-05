@@ -64,8 +64,8 @@ class productoModel{
     async obtenerProductosConStock() {
         try {
             const query = 'SELECT * FROM Orden.ProductosStockExistencia';  
-            const result = await this.DBService.query(query); 
-            return result.recordset; 
+            const result = await this.DBService.query(query);
+            return result; 
           } catch (error) {
             console.error('Error al obtener productos con stock:', error);
             throw error;

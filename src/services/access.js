@@ -4,24 +4,22 @@ import usuarioController from '../controllers/usuarioController.js';
 
 const access = async (req, res, next) => {
     try {
-        const { id } = req.user;  
+        const { id } = req.user;  // Obtiene el id del usuario del token decodificado almacenado en req.user por autenticarJWT
+        console.log('User ID from token:', id);  // Agrega un log para depurar
+
         const usuario = await usuarioController.obtenerUsuarioPorId(id);  
-        if (!usuario || !usuario.rolId) {
+        if (!usuario || !usuario.idRol) {
             return res.status(403).json({ message: 'No se pudo obtener el rol del usuario.' });
         }
-        const rolId = usuario.rolId;
+        const idRol = usuario.idRol;
+
 
         // Ahora obtenemos la ruta a la que se está intentando acceder (path + método HTTP)
         const { originalUrl, method } = req;
-
         // Consultar si el rol tiene acceso a esta ruta
-        const accesoPermitido = await rutaRolController.consultarRutaRol({
-            where: {
-                idRol: rolId,
-                idRuta: rutaController.consultarRuta(originalUrl, method),
-            }
-        });
-
+        const idRuta = await rutaController.consultarRuta(originalUrl, method);
+        const accesoPermitido = await rutaRolController.consultarRutaRol(idRol, idRuta);
+        console.log("tiene acceso: " + accesoPermitido);
         // Si el rol no tiene acceso, respondemos con error 403
         if (!accesoPermitido) {
             return res.status(403).json({ message: 'No tienes permiso para acceder a esta ruta.' });

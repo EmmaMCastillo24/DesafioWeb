@@ -56,14 +56,25 @@ const modificarPassword = async (req, res) => {
     }
 };
 
-const obtenerUsuarioPorId = async (req, res) => {
+const obtenerUsuarioPorId = async (id) => {  
+    console.log(id)
+    const idUsuario=id;
     try {
-        const { idUsuario} = req.body;  
-        await usuarioModel.obtenerUsuarioPorId(idUsuario); 
-        res.status(201).json({ message: 'Consulta exitosa' });
+        if (!id) {
+            throw new Error('idUsuario es requerido');
+        }
+
+        const usuario = await usuarioModel.obtenerUsuarioPorId(idUsuario); 
+        console.log("Usuario encontrado:", usuario);  // Agrega un log para depurar
+
+        if (!usuario) {
+            throw new Error('Usuario no encontrado');
+        }
+
+        // Retorna el usuario encontrado
+        return usuario;
     } catch (error) {
-        console.error('Error en el controlador:', error);
-        res.status(500).json({ error: 'Error al buscar al usuario por id' });
+        throw new Error(`Error al obtener usuario: ${error.message}`);
     }
 };
 

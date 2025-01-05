@@ -10,10 +10,12 @@ import ordenRouter from './routes/ordenRoutes.js';
 import productoRouter from './routes/productoRoutes.js';
 import rolRouter from './routes/rolRoutes.js';
 import usuarioRouter from './routes/usuarioRoutes.js';
+import cors from 'cors';
 
 const app = express();
 const dbService = new DBService();
 
+app.use(cors());
 process.on('SIGINT', async () => {
   try {
     console.log("Cerrando servidor...");

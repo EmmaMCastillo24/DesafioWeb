@@ -38,14 +38,26 @@ const modificarEstadoProducto = async (req, res) => {
 };
 
 const obtenerProductosConStock = async (req, res) => {
-    try {
+  try {
       const productos = await productoModel.obtenerProductosConStock();
-      res.status(200).json(productos);
-    } catch (error) {
+      // Aquí asumimos que cada producto tiene una propiedad "foto" que es un Buffer
+      const productosConImagenes = productos.map(producto => {
+          if (producto.foto) {
+              // Convertir el Buffer de la imagen a Base64
+              const imagenBase64 = producto.foto.toString('base64');
+              // Añadir la imagen en formato Base64 a la respuesta
+              producto.foto = `data:image/jpeg;base64,${imagenBase64}`;
+          }
+          return producto;
+      });
+
+      res.status(200).json(productosConImagenes); // Enviar los productos con las imágenes
+  } catch (error) {
       console.error('Error al obtener productos con stock:', error);
       res.status(500).json({ error: 'Error al obtener los productos' });
-    }
-  };
+  }
+};
+
 
   const obtenerTop10ProductosMasVendido = async (req, res) => {
     try {

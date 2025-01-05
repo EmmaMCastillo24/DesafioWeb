@@ -66,5 +66,20 @@ class ordenModel{
             throw error;
           }
     }
+    async obtenerOrdenesPorIdUsuario(idUsuario) {
+        try {
+            console.log(idUsuario);
+            const procedure = 'Orden.ObtenerOrdenesPorIdUsuario';
+            const params = { idUsuario: idUsuario };
+            const result= await this.DBService.execProcedure(procedure, params);
+            if (result.length === 0) {
+                return null;  
+            }
+            return result;  
+        } catch (error) {
+            console.error(`Error al obtener 1 ordenes: ${error.message}`);           
+            throw error;
+        }
+    }
 }
 export default ordenModel;

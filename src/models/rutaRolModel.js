@@ -18,11 +18,13 @@ class rutaRolModel{
         }
     }  
     async consultarRutaRol(idRol, idRuta) {
+        console.log("entra al modelo"+idRol + idRuta);
         try {
             const procedure = 'Sistema.ConsultarRutaRol';
             const params = { idRol: idRol,
                              idRuta: idRuta};
             const result = await this.DBService.execProcedure(procedure, params);
+            console.log("consumio el proc");
             if (result.length === 0) {
                 return null;  
             }

@@ -21,7 +21,9 @@ const loginUsuario = async (req, res) => {
 
         res.status(200).json({
             message: 'Inicio de sesión exitoso',
-            token
+            token,
+            role: usuario.idRol,
+            usuario: usuario.idUsuario
         });
 
         //const usuario = await usuarioModel.simularcontra();

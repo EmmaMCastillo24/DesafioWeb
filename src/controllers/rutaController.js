@@ -2,14 +2,19 @@ import RutaModel from '../models/rutaModel.js';
 
 const rutaModel = new RutaModel();
 
-const consultarRuta = async (req, res) => {
+const consultarRuta = async (ruta, metodo) => {  
     try {
-        const  {ruta, metodo} = req.body;  
-        await rutaModel.consultarRuta(ruta, metodo); 
-        res.status(201).json({ message: 'Consulta exitosa' });
+        const rutaRetorno = await rutaModel.consultarRuta(ruta, metodo); 
+        console.log("ruta encontrada:", rutaRetorno);  // Agrega un log para depurar
+
+        if (!rutaRetorno) {
+            throw new Error('ruta no encontrado');
+        }
+
+        // Retorna el usuario encontrado
+        return rutaRetorno;
     } catch (error) {
-        console.error('Error en el controlador:', error);
-        res.status(500).json({ error: 'Error en la consulta' });
+        throw new Error(`Error al obtener ruta: ${error.message}`);
     }
 };
 

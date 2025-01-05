@@ -6,8 +6,9 @@ import { access } from '../services/access.js';
 const router = Router();
 
 router.get('/totalVendido-agosto', autenticarJWT, access, ordenController.TotalVendidoAgosto);
+router.post('/ordenes', autenticarJWT, access, ordenController.obtenerOrdenesPorIdUsuario);
 router.post('/orden', autenticarJWT, access, ordenController.insertarOrden);
 router.put('/orden/:id', autenticarJWT, access, ordenController.modificarOrden);
-router.patch('/orden/:id', autenticarJWT, access, ordenController.modificarEstadoOrden);
+router.patch('/orden', autenticarJWT, access, ordenController.modificarEstadoOrden);
 
 export default router;  
