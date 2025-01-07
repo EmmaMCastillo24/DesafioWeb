@@ -5,6 +5,7 @@ import { access } from '../services/access.js';
 
 const router = Router();
 
+router.get('/marcas', autenticarJWT, access, marcaController.listadoMarcas);
 router.post('/marca', autenticarJWT, access, marcaController.insertarMarca);
 router.put('/marca/:id', autenticarJWT, access, marcaController.modificarMarca);
 

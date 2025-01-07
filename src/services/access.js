@@ -17,6 +17,7 @@ const access = async (req, res, next) => {
         // Ahora obtenemos la ruta a la que se está intentando acceder (path + método HTTP)
         const { originalUrl, method } = req;
         // Consultar si el rol tiene acceso a esta ruta
+        console.log(originalUrl)
         const idRuta = await rutaController.consultarRuta(originalUrl, method);
         const accesoPermitido = await rutaRolController.consultarRutaRol(idRol, idRuta);
         console.log("tiene acceso: " + accesoPermitido);

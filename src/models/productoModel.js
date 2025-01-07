@@ -5,18 +5,16 @@ class productoModel{
         this.DBService = new DBService();
     }
 
-    async insertarProducto(idCategoriaProducto, idUsuario, idMarca, idEstado, codigo, stock, existenciaMinima, precio, fechaCreacion, foto, producto){
+    async insertarProducto(idCategoriaProducto, idUsuario, idMarca, codigo, stock, existenciaMinima, precio, foto, producto){
         try{
             const procedure = 'Orden.InsertarProducto';
             const params = {idCategoriaProducto: idCategoriaProducto,
                             idUsuario: idUsuario,
                             idMarca: idMarca,
-                            idEstado: idEstado,
                             codigo: codigo,
                             stock: stock,
                             existenciaMinima: existenciaMinima,
                             precio: precio,
-                            fechaCreacion: fechaCreacion,
                             producto: producto,
                             foto: foto};
             const result = await this.DBService.execProcedure(procedure, params);
@@ -27,19 +25,18 @@ class productoModel{
         }
     }
 
-    async modificarProducto(idProducto, idCategoriaProducto, idMarca, idEstado, codigo, stock, existenciaMinima, precio, producto){
+    async modificarProducto(idProducto, idCategoriaProducto, idMarca, codigo, stock, existenciaMinima, precio, producto){
         try{
             const procedure = 'Orden.ModificarProducto';
-            const params = {idProducto, idProducto,
+            const params = {idProducto: idProducto,
                             idCategoriaProducto: idCategoriaProducto,
                             idMarca: idMarca,
-                            idEstado: idEstado,
                             codigo: codigo,
                             stock: stock,
                             existenciaMinima: existenciaMinima,
                             precio: precio,
                             producto: producto};
-            
+            console.log(params);
             const result = await this.DBService.execProcedure(procedure, params);
             return result.recordset;
         }catch(error){
@@ -79,6 +76,17 @@ class productoModel{
             return result.recordset; 
           } catch (error) {
             console.error('Error al obtener el top 10 de productos mas vendidos:', error);
+            throw error;
+          }
+    }
+
+    async listadoProductos() {
+        try {
+            const query = 'SELECT * FROM Orden.ListadoProductos';  
+            const result = await this.DBService.query(query); 
+            return result; 
+          } catch (error) {
+            console.error('Error al obtener los productos :', error);
             throw error;
           }
     }

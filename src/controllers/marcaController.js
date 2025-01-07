@@ -24,5 +24,16 @@ const modificarMarca = async (req, res) => {
     }
 };
 
-export default { insertarMarca, modificarMarca };
+const listadoMarcas = async (req, res) => {
+    try {
+      const marcas = await marcaModel.listadoMarca();
+      return res.status(200).json({ message: 'marcas obtenidas correctamente', data: marcas });
+
+    } catch (error) {
+      console.error('Error al obtener el listado de marcas:', error);
+      res.status(500).json({ error: 'Error al obtener los marcas' });
+    }
+  };
+
+export default { insertarMarca, modificarMarca, listadoMarcas };
 

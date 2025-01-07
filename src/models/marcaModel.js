@@ -28,6 +28,17 @@ class marcaModel{
             throw error;
         }
     }
+
+    async listadoMarca() {
+        try {
+            const query = 'SELECT * FROM Orden.ListadoMarcas';  
+            const result = await this.DBService.query(query); 
+            return result; 
+          } catch (error) {
+            console.error('Error al obtener las marcas :', error);
+            throw error;
+          }
+    }
     
 }
 export default marcaModel;

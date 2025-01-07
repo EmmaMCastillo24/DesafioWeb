@@ -5,6 +5,8 @@ const rutaModel = new RutaModel();
 const consultarRuta = async (ruta, metodo) => {  
     try {
         const rutaRetorno = await rutaModel.consultarRuta(ruta, metodo); 
+        console.log("ruta cosultada:"+ruta);
+        console.log("metodo cosultada:"+metodo);
         console.log("ruta encontrada:", rutaRetorno);  // Agrega un log para depurar
 
         if (!rutaRetorno) {

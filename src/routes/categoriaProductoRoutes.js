@@ -5,6 +5,7 @@ import { access } from '../services/access.js';
 
 const router = Router();
 
+router.get('/categoriaProductos', autenticarJWT, access, categoriaProductoController.listadoCategoriaProducto);
 router.post('/categoriaProductos', autenticarJWT, access, categoriaProductoController.insertarCategoriaProducto);
 router.put('/categoriaProductos/:id', autenticarJWT, access, categoriaProductoController.modificarCategoriaProducto);
 router.patch('/categoriaProductos/:id', autenticarJWT, access, categoriaProductoController.modificarEstadoCategoriaProducto);

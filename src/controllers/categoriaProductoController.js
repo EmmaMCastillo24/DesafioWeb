@@ -35,6 +35,17 @@ const modificarEstadoCategoriaProducto = async (req, res) => {
     }
 };
 
+const listadoCategoriaProducto = async (req, res) => {
+    try {
+        console.log("ENTRA AL LISTADO");
+      const categoriaProducto = await categoriaProductoModel.listadoCategoriaProducto();
+      return res.status(200).json({ message: 'categorias obtenidas correctamente', data: categoriaProducto });
 
-export default { insertarCategoriaProducto, modificarCategoriaProducto, modificarEstadoCategoriaProducto };
+    } catch (error) {
+      console.error('Error al obtener el listado de categorias:', error);
+      res.status(500).json({ error: 'Error al obtener los categorias' });
+    }
+  };
+
+export default { insertarCategoriaProducto, modificarCategoriaProducto, modificarEstadoCategoriaProducto, listadoCategoriaProducto };
 

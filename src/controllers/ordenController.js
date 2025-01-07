@@ -74,7 +74,24 @@ const TotalVendidoAgosto = async (req, res) => {
     }
 };
 
+const obtenerOrdenes = async (req, res) => {
+    try {
+
+        const ordenes = await ordenModel.obtenerOrdenes();
+        if (!ordenes || ordenes.length === 0) {
+            return res.status(404).json({ message: 'No se encontraron órdenes' });
+        }
+        // Responder con las órdenes encontradas
+        return res.status(200).json({ message: 'Órdenes obtenidas correctamente', data: ordenes });
+        
+    } catch (error) {
+        // En caso de error, responder con el mensaje de error
+        console.error(`Error al obtener las órdenes: ${error.message}`);
+        return res.status(500).json({ message: `Error al obtener las órdenes: ${error.message}` });
+    }
+};
 
 
-export default { insertarOrden, modificarOrden, modificarEstadoOrden, TotalVendidoAgosto, obtenerOrdenesPorIdUsuario };
+
+export default { insertarOrden, modificarOrden, modificarEstadoOrden, TotalVendidoAgosto, obtenerOrdenesPorIdUsuario, obtenerOrdenes };
 

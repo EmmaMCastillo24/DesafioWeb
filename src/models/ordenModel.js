@@ -81,5 +81,19 @@ class ordenModel{
             throw error;
         }
     }
+
+    async obtenerOrdenes() {
+        try {
+            const procedure = 'Orden.ObtenerOrdenes';
+            const result= await this.DBService.execProcedure(procedure);
+            if (result.length === 0) {
+                return null;  
+            }
+            return result;  
+        } catch (error) {
+            console.error(`Error al obtener las ordenes: ${error.message}`);           
+            throw error;
+        }
+    }
 }
 export default ordenModel;

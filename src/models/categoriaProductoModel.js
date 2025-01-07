@@ -48,7 +48,16 @@ class categoriaProductoModel{
             throw error;
         }
     }
-    
+    async listadoCategoriaProducto() {
+        try {
+            const query = 'SELECT * FROM Orden.ListadoCategoriaProducto';  
+            const result = await this.DBService.query(query); 
+            return result; 
+          } catch (error) {
+            console.error('Error al obtener las categorias :', error);
+            throw error;
+          }
+    }
 }
 
 export default categoriaProductoModel;

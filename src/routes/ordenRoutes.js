@@ -6,6 +6,7 @@ import { access } from '../services/access.js';
 const router = Router();
 
 router.get('/totalVendido-agosto', autenticarJWT, access, ordenController.TotalVendidoAgosto);
+router.get('/ordenesTotales', autenticarJWT, access, ordenController.obtenerOrdenes);
 router.post('/ordenes', autenticarJWT, access, ordenController.obtenerOrdenesPorIdUsuario);
 router.post('/orden', autenticarJWT, access, ordenController.insertarOrden);
 router.put('/orden/:id', autenticarJWT, access, ordenController.modificarOrden);

@@ -9,10 +9,11 @@ const upload = multer({ storage: storage });
 const router = Router();
 
 //productos
+router.get('/productos', autenticarJWT, access, productoController.listadoProductos);
 router.get('/productos-stock', autenticarJWT, access, productoController.obtenerProductosConStock);
 router.get('/productos-Top10MasVendidos', access, autenticarJWT, productoController.obtenerTop10ProductosMasVendido);
 router.post('/productos', autenticarJWT, access, upload.single('foto'), productoController.insertarProducto);
-router.put('/productos/:id', autenticarJWT, access, productoController.modificarProducto);
-router.patch('/productos/:id', autenticarJWT, access, productoController.modificarEstadoProducto);
+router.put('/productos', autenticarJWT, access, productoController.modificarProducto);
+router.patch('/productos', autenticarJWT, access, productoController.modificarEstadoProducto);
 
 export default router;  
